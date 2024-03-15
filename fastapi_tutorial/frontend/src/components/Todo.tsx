@@ -1,38 +1,45 @@
-import React, { useState, useEffect } from 'react';
-
-interface Item {
-  id: number;
-  content: string;
-  finished: boolean;
-}
+import React, { useEffect, useState } from 'react';
 
 function MyComponent(): JSX.Element {
-  const [data, setData] = useState<Item[]>([]);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch data from the API
-    fetch('http://127.0.0.1:8000')
-      .then((response) => response.json())
-      .then((apiData: Item[]) => {
-        // Store the API response data in the state variable
-        setData(apiData);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/welcome'); // Replace with your API endpoint
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+
+        const json = await response.json();
+        setData(json);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
+
+  if (loading) {
+    return <p>Loading data...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
   return (
     <div>
-      {data.length > 0 ? (
-        <ul>
-          {data.map((item) => (
-            <li key={item.id}>{item.content}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>Loading data...</p>
-      )}
+      <h3>Data:</h3>
+      <p>ID: {data.id}</p>
+      <p>Content: {data.content}</p>
+      <p>Finished: {data.finished ? 'Yes' : 'No'}</p>
     </div>
   );
 }

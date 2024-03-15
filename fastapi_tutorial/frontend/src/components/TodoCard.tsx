@@ -22,7 +22,7 @@ function DataFetcher(): JSX.Element {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://cors-anywhere.herokuapp.com/http://127.0.0.1:8000');
+        const response = await fetch('/welcome');
         const jsonTodos: Todo[] = await response.json();
         setTodos(jsonTodos);
       } catch (error) {

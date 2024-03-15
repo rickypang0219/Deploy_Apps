@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-
+from fastapi.responses import JSONResponse
 
 # create app instance
 app = FastAPI()
@@ -33,8 +33,13 @@ async def delete_todo(id: int):
     return {"message": "item not found!"}
 
 
+@app.get("/welcome")
+async def welcome_home():
+    data = {"id": 0, "content": "hello world!", "finished": True}
+    return JSONResponse(content=data)
+
+
 @app.get("/")
-async def read_todo():
-    return {"id":0, "content":"hello world!" , "finished":True}
-
-
+async def read_todos():
+    # return JSONResponse(content=item_arr)
+    return item_arr
