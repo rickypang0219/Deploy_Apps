@@ -35,15 +35,6 @@ async def delete_todo(id: int):
 
 @app.get("/")
 async def read_todo():
-    return item_arr
+    return {"id":0, "content":"hello world!" , "finished":True}
 
 
-# @app.get("/items/{item_id}")
-# async def read_item(item_id: str, q: str | None = None, short: bool = False):
-#     item = {"item_id": item_id}
-#     if q:
-#         item.update({"q": q})
-#     if not short:
-#         item.update({"description": "Amazing item with long description"})
-#     return item
-#
