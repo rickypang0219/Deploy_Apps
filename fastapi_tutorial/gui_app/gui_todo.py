@@ -71,9 +71,6 @@ def sumbit(content):
 submit_button = ck.CTkButton(window, text="submit", command=lambda: sumbit(content))
 submit_button.pack(pady=10)
 
-listbox = tk.Listbox(window, width=50)
-listbox.pack()
-
 
 # Create a Listbox with a custom style
 listbox = tk.Listbox(window, width=50)
